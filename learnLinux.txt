@@ -1,38 +1,38 @@
-lsb_release ²é¿´ÏµÍ³·¢ĞĞ°æ
-»ñÈ¡µ±Ç°ÓÃ»§ËùÓĞµÄ×é£ºgroups 
-ÓÃ»§
+lsb_release æŸ¥çœ‹ç³»ç»Ÿå‘è¡Œç‰ˆ
+è·å–å½“å‰ç”¨æˆ·æ‰€æœ‰çš„ç»„ï¼šgroups 
+ç”¨æˆ·
 sudo adduser learn
 sudo usermod -G adm,cdrom,sudo,dip,plugdev,lxd learn
 
-ÓÃ»§²»ĞèÒªÃÜÂëÔËĞĞËùÓĞÃüÁî
+ç”¨æˆ·ä¸éœ€è¦å¯†ç è¿è¡Œæ‰€æœ‰å‘½ä»¤
 echo "learn ALL = (root) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/learn
 sudo chmod 0440 /etc/sudoers.d/learn
 
-ubuntu 18.04 ĞŞ¸ÄÖ÷»úÃû£¬ÍøÂç
+ubuntu 18.04 ä¿®æ”¹ä¸»æœºåï¼Œç½‘ç»œ
 sudo vim /var/lib/cloud/seed/nocloud-net/user-data
 sudo vim /etc/cloud/cloud.cfg.d/50-curtin-networking.cfg
 sudo cloud-init clear
 sudo cloud-init init
 
-²é¿´½ø³ÌÊÇ·ñÆô¶¯
+æŸ¥çœ‹è¿›ç¨‹æ˜¯å¦å¯åŠ¨
 netstat -tunlp|egrep "(2181|2182|2183|9092|9093|9094)"
-²é¿´¶Ë¿Ú
+æŸ¥çœ‹ç«¯å£
 ss -an | grep 6379
 
-ÎÄ¼ş
-ÎÄ¼şÀàĞÍ£º
+æ–‡ä»¶
+æ–‡ä»¶ç±»å‹ï¼š
 -|rw-|rw-|r-- 1 learn learn   34 Jan 15 15:04 c
 d|rwx|rwx|r-x 2 learn learn 4096 Jan 15 14:48 my-cluster
-ĞŞ¸ÄÎÄ¼şÈ¨ÏŞ£ºchmod
-ĞŞ¸ÄÎÄ¼şËùÊôÕß£ºchown
-ĞŞ¸ÄÎÄ¼şËùÊô×é£ºchgrp
+ä¿®æ”¹æ–‡ä»¶æƒé™ï¼šchmod
+ä¿®æ”¹æ–‡ä»¶æ‰€å±è€…ï¼šchown
+ä¿®æ”¹æ–‡ä»¶æ‰€å±ç»„ï¼šchgrp
 cp
 rm
 mv
 mkdir
 
-tar.gz ½âÑ¹
-tar -zxvf ÎÄ¼ş -C Êä³öÄ¿Â¼
+tar.gz è§£å‹
+tar -zxvf æ–‡ä»¶ -C è¾“å‡ºç›®å½•
 
 
 ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
@@ -43,11 +43,11 @@ ssh localhost
 ssh-copy-id learn@jmu01
 ssh jmu01
 
-scp:ssh¿½±´ÎÄ¼ş¼Ğ
+scp:sshæ‹·è´æ–‡ä»¶å¤¹
 
-lsblk ²é¿´µÄÊÇblock device,Ò²¾ÍÊÇÂß¼­´ÅÅÌ´óĞ¡¡£
+lsblk æŸ¥çœ‹çš„æ˜¯block device,ä¹Ÿå°±æ˜¯é€»è¾‘ç£ç›˜å¤§å°ã€‚
 
-df²é¿´µÄÊÇfile system, Ò²¾ÍÊÇÎÄ¼şÏµÍ³²ãµÄ´ÅÅÌ´óĞ¡¡£
+dfæŸ¥çœ‹çš„æ˜¯file system, ä¹Ÿå°±æ˜¯æ–‡ä»¶ç³»ç»Ÿå±‚çš„ç£ç›˜å¤§å°ã€‚
 
 wget -q -O- 'https://mirrors.aliyun.com/ceph/keys/release.asc' | sudo apt-key add -
 echo deb https://mirrors.aliyun.com/ceph/debian-mimic/ $(lsb_release -sc) main | sudo tee /etc/apt/sources.list.d/ceph.list
@@ -81,34 +81,34 @@ network:
       dhcp4: true
   version: 2
 
-New-SelfSignedCertificate -CertStoreLocation "Cert:LocalMachine\My" -Subject "CN=EsonTech,O=ËÄ´¨ÒëÑ¶¿Æ¼¼ÓĞÏŞ¹«Ë¾,L=Chengdu,S=Sichuan,C=CN" -FriendlyName "EsonDevAndTest" -DnsName "localhost,127.0.0.1" -NotAfter "2028-12-31 23:59:59" -KeyUsage DataEncipherment,KeyEncipherment,DigitalSignature -KeySpec KeyExchange -HashAlgorithm sha256
+New-SelfSignedCertificate -CertStoreLocation "Cert:LocalMachine\My" -Subject "CN=EsonTech,O=å››å·è¯‘è®¯ç§‘æŠ€æœ‰é™å…¬å¸,L=Chengdu,S=Sichuan,C=CN" -FriendlyName "EsonDevAndTest" -DnsName "localhost,127.0.0.1" -NotAfter "2028-12-31 23:59:59" -KeyUsage DataEncipherment,KeyEncipherment,DigitalSignature -KeySpec KeyExchange -HashAlgorithm sha256
 
 sqlcmd -S [ip] -U sa -P 1 -d [db]
 netstat -aon|findstr "80"
 
 hbase 2.1 Bug
 cp $HBASE_HOME/lib/client-facing-thirdparty/htrace-core-3.1.0-incubating.jar $HBASE_HOME/lib/
-Æô¶¯ journalnode
+å¯åŠ¨ journalnode
 hadoop-daemon.sh start journalnode
-Í¬²½µ½±¸ÓÃ½Úµã£ºhdfs namenode -bootstrapStandby
+åŒæ­¥åˆ°å¤‡ç”¨èŠ‚ç‚¹ï¼šhdfs namenode -bootstrapStandby
 
-Ç¿ÖÆ½«Ò»¸öNameNode×ª»»ÎªActive×´Ì¬¡£
-bin/hdfs haadmin ¨CtransitionToActive -forcemanual master01
+å¼ºåˆ¶å°†ä¸€ä¸ªNameNodeè½¬æ¢ä¸ºActiveçŠ¶æ€ã€‚
+bin/hdfs haadmin â€“transitionToActive -forcemanual master01
 
 OBJ= "NT Authority\NetworkService"
 
-dotnet°²×°²»ÉÏ£ºsudo add-apt-repository universe
+dotnetå®‰è£…ä¸ä¸Šï¼šsudo add-apt-repository universe
 
-ÔÚ·şÎñÆ÷ÉÏÔËĞĞ°²×°³ÌĞò¡£ ´Ó¹ÜÀíÔ±ÃüÁîÌáÊ¾·ûÔËĞĞ°²×°³ÌĞòÊ±£¬ÒÔÏÂ¿ª¹Ø½«¿ÉÓÃ£º
-OPT_NO_ANCM=1 ¨C Ìø¹ı°²×° ASP.NET Core Ä£¿é¡£
-OPT_NO_RUNTIME=1 ¨C Ìø¹ı°²×° .NET Core ÔËĞĞÊ±¡£
-OPT_NO_SHAREDFX=1 ¨C Ìø¹ı°²×° ASP.NET ¹²Ïí¿ò¼Ü£¨ASP.NET ÔËĞĞÊ±£©¡£
-OPT_NO_X86=1 ¨C Ìø¹ı°²×° x86 ÔËĞĞÊ±¡£ È·¶¨²»»áÍĞ¹Ü 32 Î»Ó¦ÓÃÊ±£¬ÇëÊ¹ÓÃ´Ë¿ª¹Ø¡£ Èç¹ûÓĞÍ¬Ê±ÍĞ¹Ü 32 Î»ºÍ 64 Î»Ó¦ÓÃµÄ¿ÉÄÜ£¬Çë²»ÒªÊ¹ÓÃ´Ë¿ª¹Ø²¢°²×°Á½¸öÔËĞĞÊ±¡£
-IIS ÖØÆô
+åœ¨æœåŠ¡å™¨ä¸Šè¿è¡Œå®‰è£…ç¨‹åºã€‚ ä»ç®¡ç†å‘˜å‘½ä»¤æç¤ºç¬¦è¿è¡Œå®‰è£…ç¨‹åºæ—¶ï¼Œä»¥ä¸‹å¼€å…³å°†å¯ç”¨ï¼š
+OPT_NO_ANCM=1 â€“ è·³è¿‡å®‰è£… ASP.NET Core æ¨¡å—ã€‚
+OPT_NO_RUNTIME=1 â€“ è·³è¿‡å®‰è£… .NET Core è¿è¡Œæ—¶ã€‚
+OPT_NO_SHAREDFX=1 â€“ è·³è¿‡å®‰è£… ASP.NET å…±äº«æ¡†æ¶ï¼ˆASP.NET è¿è¡Œæ—¶ï¼‰ã€‚
+OPT_NO_X86=1 â€“ è·³è¿‡å®‰è£… x86 è¿è¡Œæ—¶ã€‚ ç¡®å®šä¸ä¼šæ‰˜ç®¡ 32 ä½åº”ç”¨æ—¶ï¼Œè¯·ä½¿ç”¨æ­¤å¼€å…³ã€‚ å¦‚æœæœ‰åŒæ—¶æ‰˜ç®¡ 32 ä½å’Œ 64 ä½åº”ç”¨çš„å¯èƒ½ï¼Œè¯·ä¸è¦ä½¿ç”¨æ­¤å¼€å…³å¹¶å®‰è£…ä¸¤ä¸ªè¿è¡Œæ—¶ã€‚
+IIS é‡å¯
 net stop was /y
 net start w3svc
 
-DNSÏà¹ØÃüÁî
+DNSç›¸å…³å‘½ä»¤
 sudo apt install dnsutils
 nslookup www.baidu.com
 dig google.com
@@ -117,7 +117,7 @@ sudo systemd-resolve --statistics
 sudo systemd-resolve --flush-caches
 sudo systemctl restart systemd-resolved
 
-ÃÜÂëÉèÖÃ
+å¯†ç è®¾ç½®
 python
 import crypt; print crypt.crypt("userpassword","username")
 ansible all -m shell -a 'usermode -p "ubNvyB3BfVMAE" ubuntu ' --become
@@ -128,51 +128,51 @@ BF8Y8-GN2QH-T84XB-QVY3B-RC4DF
 Visual Studio 2019 Professional
 NYWVH-HT4XC-R2WYW-9Y3CM-X4V3Y
 
-Helm2 ·şÎñ¶Ë°²×°Tiller
+Helm2 æœåŠ¡ç«¯å®‰è£…Tiller
 helm init
 
-ÓÉÓÚ Helm Ä¬ÈÏ»áÈ¥ storage.googleapis.com À­È¡¾µÏñ£¬Èç¹ûÄãµ±Ç°Ö´ĞĞµÄ»úÆ÷²»ÄÜ·ÃÎÊ¸ÃÓòÃûµÄ»°¿ÉÒÔÊ¹ÓÃÒÔÏÂÃüÁîÀ´°²×°
+ç”±äº Helm é»˜è®¤ä¼šå» storage.googleapis.com æ‹‰å–é•œåƒï¼Œå¦‚æœä½ å½“å‰æ‰§è¡Œçš„æœºå™¨ä¸èƒ½è®¿é—®è¯¥åŸŸåçš„è¯å¯ä»¥ä½¿ç”¨ä»¥ä¸‹å‘½ä»¤æ¥å®‰è£…
 helm init --client-only --stable-repo-url https://aliacs-app-catalog.oss-cn-hangzhou.aliyuncs.com/charts/
 helm repo add incubator https://aliacs-app-catalog.oss-cn-hangzhou.aliyuncs.com/charts-incubator/
 helm repo update
-# ´´½¨·şÎñ¶Ë
+# åˆ›å»ºæœåŠ¡ç«¯
 helm init --service-account tiller --upgrade -i registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.14.3  --stable-repo-url https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts
  
-# ´´½¨TLSÈÏÖ¤·şÎñ¶Ë£¬²Î¿¼µØÖ·£ºhttps://github.com/gjmzj/kubeasz/blob/master/docs/guide/helm.md
+# åˆ›å»ºTLSè®¤è¯æœåŠ¡ç«¯ï¼Œå‚è€ƒåœ°å€ï¼šhttps://github.com/gjmzj/kubeasz/blob/master/docs/guide/helm.md
 helm init --service-account tiller --upgrade -i registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.14.3 --tiller-tls-cert /etc/kubernetes/ssl/tiller001.pem --tiller-tls-key /etc/kubernetes/ssl/tiller001-key.pem --tls-ca-cert /etc/kubernetes/ssl/ca.pem --tiller-namespace kube-system --stable-repo-url https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts
 
-´´½¨ Kubernetes µÄ·şÎñÕÊºÅºÍ°ó¶¨½ÇÉ«
+åˆ›å»º Kubernetes çš„æœåŠ¡å¸å·å’Œç»‘å®šè§’è‰²
 kubectl create serviceaccount --namespace kube-system tiller
 kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
 
-Îª Tiller ÉèÖÃÕÊºÅ
-# Ê¹ÓÃ kubectl patch ¸üĞÂ API ¶ÔÏó
+ä¸º Tiller è®¾ç½®å¸å·
+# ä½¿ç”¨ kubectl patch æ›´æ–° API å¯¹è±¡
 $ kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
 deployment.extensions "tiller-deploy" patched
 
-²é¿´ÊÇ·ñÊÚÈ¨³É¹¦
+æŸ¥çœ‹æ˜¯å¦æˆæƒæˆåŠŸ
 kubectl get deploy --namespace kube-system   tiller-deploy  --output yaml|grep  serviceAccount
 
-ÑéÖ¤ Tiller ÊÇ·ñ°²×°³É¹¦
+éªŒè¯ Tiller æ˜¯å¦å®‰è£…æˆåŠŸ
 kubectl -n kube-system get pods|grep tiller
 
-Èç¹ûÄãĞèÒªÔÚ Kubernetes ÖĞĞ¶ÔØÒÑ²¿ÊğµÄ Tiller£¬¿ÉÊ¹ÓÃÒÔÏÂÃüÁîÍê³ÉĞ¶ÔØ¡£
-$ helm reset »ò
+å¦‚æœä½ éœ€è¦åœ¨ Kubernetes ä¸­å¸è½½å·²éƒ¨ç½²çš„ Tillerï¼Œå¯ä½¿ç”¨ä»¥ä¸‹å‘½ä»¤å®Œæˆå¸è½½ã€‚
+$ helm reset æˆ–
 $helm reset --force
 
-1£©¸ü»»²Ö¿â£º
+1ï¼‰æ›´æ¢ä»“åº“ï¼š
 
-ÈôÓöµ½Unable to get an update from the ¡°stable¡± chart repository (https://kubernetes-charts.storage.googleapis.com) ´íÎó
-ÊÖ¶¯¸ü»»stable ´æ´¢¿âÎª°¢ÀïÔÆµÄ´æ´¢¿â
+è‹¥é‡åˆ°Unable to get an update from the â€œstableâ€ chart repository (https://kubernetes-charts.storage.googleapis.com) é”™è¯¯
+æ‰‹åŠ¨æ›´æ¢stable å­˜å‚¨åº“ä¸ºé˜¿é‡Œäº‘çš„å­˜å‚¨åº“
 
-# ÏÈÒÆ³ıÔ­ÏÈµÄ²Ö¿â
+# å…ˆç§»é™¤åŸå…ˆçš„ä»“åº“
 helm repo remove stable
-# Ìí¼ÓĞÂµÄ²Ö¿âµØÖ·
+# æ·»åŠ æ–°çš„ä»“åº“åœ°å€
 helm repo add stable https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts
-# ¸üĞÂ²Ö¿â
+# æ›´æ–°ä»“åº“
 helm repo update
 
-²é¿´ÔÚ´æ´¢¿âÖĞ¿ÉÓÃµÄËùÓĞ Helm charts£º
+æŸ¥çœ‹åœ¨å­˜å‚¨åº“ä¸­å¯ç”¨çš„æ‰€æœ‰ Helm chartsï¼š
 helm search
 
 FROM ubuntu
@@ -180,33 +180,41 @@ RUN apt-get update && apt-get install -y iputils-ping
 CMD bash
 
 Delete Repository keys
-ÏÈÉ¾³ı etc/apt/ÏÂÃæ¶ÔÓ¦µÄÔ´ÅäÖÃ
-We use ¡°apt-key¡± command to add the repository keys. First, let us list the added keys using command:
+å…ˆåˆ é™¤ etc/apt/ä¸‹é¢å¯¹åº”çš„æºé…ç½®
+We use â€œapt-keyâ€ command to add the repository keys. First, let us list the added keys using command:
 $ sudo apt-key list
 sudo apt-key del "3820 03C2 C8B7 B4AB 813E 915B 14E4 9429 73C6 2A1B"
 Or, specify the last 8 characters only
 $ sudo apt-key del 73C62A1B
 
-ºÜ¶àÊ±ºò telnet Íê¾ÍÎŞ·¨ÍË³öÁË£¬ctrl+c ÓĞÊ±Ò²ÎŞ·¨ÍË³ö
-ºóÀ´ÕÒµ½ÁËÕıÈ·µÄÃüÁî ctrl+]  È»ºóÔÚtelnet ÃüÁîĞĞÊäÈë quit  ¾Í¿ÉÒÔÍË³öÁË
+å¾ˆå¤šæ—¶å€™ telnet å®Œå°±æ— æ³•é€€å‡ºäº†ï¼Œctrl+c æœ‰æ—¶ä¹Ÿæ— æ³•é€€å‡º
+åæ¥æ‰¾åˆ°äº†æ­£ç¡®çš„å‘½ä»¤ ctrl+]  ç„¶ååœ¨telnet å‘½ä»¤è¡Œè¾“å…¥ quit  å°±å¯ä»¥é€€å‡ºäº†
 
-IIS ´úÀí£¬ĞŞ¸ÄHost
+IIS ä»£ç†ï¼Œä¿®æ”¹Host
 Application Request Routing has an option to preserve the original host header: preserveHostHeader. This option is by default false. You can enable it with:
 "C:\Windows\System32\inetsrv\appcmd.exe" set config -section:system.webServer/proxy /preserveHostHeader:"True" /commit:apphost
 
-Ğ¶ÔØdocker
+å¸è½½docker
 $ sudo apt-get purge docker-ce docker-ce-cli containerd.io
-É¾³ıËùÓĞ images, containers, and volumes:
+åˆ é™¤æ‰€æœ‰ images, containers, and volumes:
 $ sudo rm -rf /var/lib/docker
 
-windows server 2019 ¼¤»î
+windows server 2019 æ¿€æ´»
 slmgr /upk
 slmgr /ipk N69G4-B89J2-4G8F4-WWYCC-J464C
 slmgr /skms zh.us.to
 slmgr /ato
 
 https://cn.neworld.asia/link/5WSJcl9PCfunRmf6?mu=0
-ĞÂ½çssr
+æ–°ç•Œssr
 
-wsl ¹ÒÔØÄ¿Â¼µØÖ·
+wsl æŒ‚è½½ç›®å½•åœ°å€
 \\wsl$\docker-desktop-data\mnt\wsl\docker-desktop-data\data\docker\volumes
+
+pfx æ­£å¼è½¬æ¢
+openssl pkcs12 -in [yourfile.pfx] -nocerts -out [keyfile-encrypted.key]
+openssl pkcs12 -in [yourfile.pfx] -clcerts -nokeys -out [certificate.crt]
+åŠ å¯†key è½¬æ¢ä¸ºæœªåŠ å¯† key
+openssl rsa -in [keyfile-encrypted.key] -out [keyfile-decrypted.key]
+åŠ å¯†key pemæ–‡ä»¶
+openssl rsa -in [keyfile-encrypted.key] -outform PEM -out [keyfile-encrypted-pem.key]
