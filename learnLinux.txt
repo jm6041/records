@@ -1,0 +1,212 @@
+lsb_release 查看系统发行版
+获取当前用户所有的组：groups 
+用户
+sudo adduser learn
+sudo usermod -G adm,cdrom,sudo,dip,plugdev,lxd learn
+
+用户不需要密码运行所有命令
+echo "learn ALL = (root) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/learn
+sudo chmod 0440 /etc/sudoers.d/learn
+
+ubuntu 18.04 修改主机名，网络
+sudo vim /var/lib/cloud/seed/nocloud-net/user-data
+sudo vim /etc/cloud/cloud.cfg.d/50-curtin-networking.cfg
+sudo cloud-init clear
+sudo cloud-init init
+
+查看进程是否启动
+netstat -tunlp|egrep "(2181|2182|2183|9092|9093|9094)"
+查看端口
+ss -an | grep 6379
+
+文件
+文件类型：
+-|rw-|rw-|r-- 1 learn learn   34 Jan 15 15:04 c
+d|rwx|rwx|r-x 2 learn learn 4096 Jan 15 14:48 my-cluster
+修改文件权限：chmod
+修改文件所属者：chown
+修改文件所属组：chgrp
+cp
+rm
+mv
+mkdir
+
+tar.gz 解压
+tar -zxvf 文件 -C 输出目录
+
+
+ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
+cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+chmod 0600 ~/.ssh/authorized_keys
+ssh localhost
+
+ssh-copy-id learn@jmu01
+ssh jmu01
+
+scp:ssh拷贝文件夹
+
+lsblk 查看的是block device,也就是逻辑磁盘大小。
+
+df查看的是file system, 也就是文件系统层的磁盘大小。
+
+wget -q -O- 'https://mirrors.aliyun.com/ceph/keys/release.asc' | sudo apt-key add -
+echo deb https://mirrors.aliyun.com/ceph/debian-mimic/ $(lsb_release -sc) main | sudo tee /etc/apt/sources.list.d/ceph.list
+
+ceph-deploy install --repo-url https://mirrors.aliyun.com/ceph/debian-mimic/ --gpg-url https://mirrors.aliyun.com/ceph/keys/release.asc jmu00 jmu01 jmu02 jmu03
+
+network:
+    version: 2
+    ethernets:
+        ens160:
+            addresses:
+            - 10.0.0.2/24
+            dhcp4: false
+            gateway4: 10.0.0.1
+            nameservers:
+                addresses:
+                - 208.67.222.222
+                - 208.67.220.220
+                search: [anotheritguy.com]
+        ens192:
+            addresses:
+            -  192.168.1.2/24
+            dhcp4: false
+            routes:
+            - to: 172.30.1.0/24
+              via: 192.168.1.1
+
+network:
+  ethernets:
+    eth0:
+      dhcp4: true
+  version: 2
+
+New-SelfSignedCertificate -CertStoreLocation "Cert:LocalMachine\My" -Subject "CN=EsonTech,O=四川译讯科技有限公司,L=Chengdu,S=Sichuan,C=CN" -FriendlyName "EsonDevAndTest" -DnsName "localhost,127.0.0.1" -NotAfter "2028-12-31 23:59:59" -KeyUsage DataEncipherment,KeyEncipherment,DigitalSignature -KeySpec KeyExchange -HashAlgorithm sha256
+
+sqlcmd -S [ip] -U sa -P 1 -d [db]
+netstat -aon|findstr "80"
+
+hbase 2.1 Bug
+cp $HBASE_HOME/lib/client-facing-thirdparty/htrace-core-3.1.0-incubating.jar $HBASE_HOME/lib/
+启动 journalnode
+hadoop-daemon.sh start journalnode
+同步到备用节点：hdfs namenode -bootstrapStandby
+
+强制将一个NameNode转换为Active状态。
+bin/hdfs haadmin –transitionToActive -forcemanual master01
+
+OBJ= "NT Authority\NetworkService"
+
+dotnet安装不上：sudo add-apt-repository universe
+
+在服务器上运行安装程序。 从管理员命令提示符运行安装程序时，以下开关将可用：
+OPT_NO_ANCM=1 – 跳过安装 ASP.NET Core 模块。
+OPT_NO_RUNTIME=1 – 跳过安装 .NET Core 运行时。
+OPT_NO_SHAREDFX=1 – 跳过安装 ASP.NET 共享框架（ASP.NET 运行时）。
+OPT_NO_X86=1 – 跳过安装 x86 运行时。 确定不会托管 32 位应用时，请使用此开关。 如果有同时托管 32 位和 64 位应用的可能，请不要使用此开关并安装两个运行时。
+IIS 重启
+net stop was /y
+net start w3svc
+
+DNS相关命令
+sudo apt install dnsutils
+nslookup www.baidu.com
+dig google.com
+sudo systemd-resolve --status
+sudo systemd-resolve --statistics
+sudo systemd-resolve --flush-caches
+sudo systemctl restart systemd-resolved
+
+密码设置
+python
+import crypt; print crypt.crypt("userpassword","username")
+ansible all -m shell -a 'usermode -p "ubNvyB3BfVMAE" ubuntu ' --become
+
+Visual Studio 2019 Enterprise
+BF8Y8-GN2QH-T84XB-QVY3B-RC4DF
+
+Visual Studio 2019 Professional
+NYWVH-HT4XC-R2WYW-9Y3CM-X4V3Y
+
+Helm2 服务端安装Tiller
+helm init
+
+由于 Helm 默认会去 storage.googleapis.com 拉取镜像，如果你当前执行的机器不能访问该域名的话可以使用以下命令来安装
+helm init --client-only --stable-repo-url https://aliacs-app-catalog.oss-cn-hangzhou.aliyuncs.com/charts/
+helm repo add incubator https://aliacs-app-catalog.oss-cn-hangzhou.aliyuncs.com/charts-incubator/
+helm repo update
+# 创建服务端
+helm init --service-account tiller --upgrade -i registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.14.3  --stable-repo-url https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts
+ 
+# 创建TLS认证服务端，参考地址：https://github.com/gjmzj/kubeasz/blob/master/docs/guide/helm.md
+helm init --service-account tiller --upgrade -i registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.14.3 --tiller-tls-cert /etc/kubernetes/ssl/tiller001.pem --tiller-tls-key /etc/kubernetes/ssl/tiller001-key.pem --tls-ca-cert /etc/kubernetes/ssl/ca.pem --tiller-namespace kube-system --stable-repo-url https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts
+
+创建 Kubernetes 的服务帐号和绑定角色
+kubectl create serviceaccount --namespace kube-system tiller
+kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+
+为 Tiller 设置帐号
+# 使用 kubectl patch 更新 API 对象
+$ kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
+deployment.extensions "tiller-deploy" patched
+
+查看是否授权成功
+kubectl get deploy --namespace kube-system   tiller-deploy  --output yaml|grep  serviceAccount
+
+验证 Tiller 是否安装成功
+kubectl -n kube-system get pods|grep tiller
+
+如果你需要在 Kubernetes 中卸载已部署的 Tiller，可使用以下命令完成卸载。
+$ helm reset 或
+$helm reset --force
+
+1）更换仓库：
+
+若遇到Unable to get an update from the “stable” chart repository (https://kubernetes-charts.storage.googleapis.com) 错误
+手动更换stable 存储库为阿里云的存储库
+
+# 先移除原先的仓库
+helm repo remove stable
+# 添加新的仓库地址
+helm repo add stable https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts
+# 更新仓库
+helm repo update
+
+查看在存储库中可用的所有 Helm charts：
+helm search
+
+FROM ubuntu
+RUN apt-get update && apt-get install -y iputils-ping
+CMD bash
+
+Delete Repository keys
+先删除 etc/apt/下面对应的源配置
+We use “apt-key” command to add the repository keys. First, let us list the added keys using command:
+$ sudo apt-key list
+sudo apt-key del "3820 03C2 C8B7 B4AB 813E 915B 14E4 9429 73C6 2A1B"
+Or, specify the last 8 characters only
+$ sudo apt-key del 73C62A1B
+
+很多时候 telnet 完就无法退出了，ctrl+c 有时也无法退出
+后来找到了正确的命令 ctrl+]  然后在telnet 命令行输入 quit  就可以退出了
+
+IIS 代理，修改Host
+Application Request Routing has an option to preserve the original host header: preserveHostHeader. This option is by default false. You can enable it with:
+"C:\Windows\System32\inetsrv\appcmd.exe" set config -section:system.webServer/proxy /preserveHostHeader:"True" /commit:apphost
+
+卸载docker
+$ sudo apt-get purge docker-ce docker-ce-cli containerd.io
+删除所有 images, containers, and volumes:
+$ sudo rm -rf /var/lib/docker
+
+windows server 2019 激活
+slmgr /upk
+slmgr /ipk N69G4-B89J2-4G8F4-WWYCC-J464C
+slmgr /skms zh.us.to
+slmgr /ato
+
+https://cn.neworld.asia/link/5WSJcl9PCfunRmf6?mu=0
+新界ssr
+
+wsl 挂载目录地址
+\\wsl$\docker-desktop-data\mnt\wsl\docker-desktop-data\data\docker\volumes
